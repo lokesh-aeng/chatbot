@@ -1,0 +1,112 @@
+.ip{
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
+.input-wrapper{
+    width: 96%;
+    height: 60%;
+    max-height: 50px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 32px;
+    outline: 1px solid #CCCCE5;
+    box-shadow: 0 0 8px rgba(230, 230, 230, 0.06);
+}
+.ip .input-wrapper .clear-btn {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  right: 2px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: none;
+  transition: 0.2s ease;
+}
+body.light .chat-footer{
+  background: #fff;
+}
+body.dark .chat-footer{
+  background: #53595e;
+}
+
+.chat-form{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body.dark .chat-footer .chat-form .input-wrapper{
+  background: #444654;
+}
+.chat-footer .input-wrapper:focus-within{
+  outline: 2px solid #ffffff;
+}
+.chat-form .message-input{
+  border: none;
+  outline: none;
+  background: none;
+  width: 96%;
+  height: 100%;
+  padding: 0px 10px;
+  font-size: 0.95rem;
+}
+body.dark .chat-form .message-input{
+  border: none;
+  outline: none;
+  background: none;
+  color: white;
+  width: 90%;
+  height: 100%;
+  padding: 0px 17px;
+  font-size: 0.95rem;
+}
+.submit{
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+}
+
+.submit button{
+  height: 40%;
+  font-size: 1.95rem;
+  min-width: 20px;
+  max-height: 50px;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0);
+  transition: 0.2s ease;
+  color: var(--text-color);
+}
+
+.chat-form button img{
+  height:100%;
+  width: 100%;
+  border-radius: 50%;
+  color: var(--text-color);
+}
+
+.chat-form .message-input:valid ~ button{
+  display: block;
+}
+
+.chat-form .clear-btn:focus,
+.chat-form .submit-btn:focus {
+  outline: 2px solid #6D4FC2;
+  outline-offset: 2px;
+}

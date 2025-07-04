@@ -1,0 +1,28 @@
+loader:
+  mode: 'elements'
+  strategy: 'auto'
+
+recursive:
+  chunk_size: 1500
+  chunk_overlap: 200
+
+semantic:
+  percentile: 80
+  breakpoint_threshold_type: "percentile"
+  breakpoint_threshold_amount: 95
+  buffer_size: 1
+
+supabase:
+  batch_embed: 32
+  batch_table: 750
+  docs: "documents"
+  chunks: "chunks"
+
+query:
+  similarity_threshold: 0.2
+  top_k: 5
+
+cache:
+  vectors_max_size: 1000
+  response_ttl: 3600
+  json_max_bytes: 104857600

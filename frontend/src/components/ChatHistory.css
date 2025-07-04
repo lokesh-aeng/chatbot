@@ -1,0 +1,74 @@
+.chat-history-panel {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100%;
+  background: white;
+  border-left: 1px solid #ccc;
+  padding: 16px;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+  transition: right 0.3s ease-in-out;
+  z-index: 101;
+  overflow-y: auto;
+}
+body.dark .chat-history-panel{
+  background-color: black;
+  color: white;
+}
+
+.chat-entry{
+  border: 0.25px solid black;
+  border-radius: 10px;
+  padding: 5px 5px 5px 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  
+}
+.chat-entry .chatinfo{
+  width: 90%;
+}
+.chat-entry .delete-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff00;
+  border: none;
+}
+.chat-entry .delete-button button:hover{
+  cursor: pointer;
+}
+.chat-entry:hover{
+  cursor: pointer;
+  background-color: #cccccca2;
+  border: 1px solid black;
+}
+.chat-history-panel.visible {
+  right: 0;
+}
+
+.chat-history-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  z-index: 100;
+}
+
+.chat-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.close-history {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}

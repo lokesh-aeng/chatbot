@@ -1,0 +1,18 @@
+artifacts_root: artifacts
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  source_url: https://drive.google.com/drive/folders/16h9gmEa24dMne7ljSX52lA-OwDNvC4g3
+  local_data_file: artifacts/data_ingestion/data
+  unzip_dir: artifacts/data_ingestion
+
+data_transformation:
+  root_dir: artifacts/data_transformation
+  text_dir: artifacts/data_transformation/text
+  video_dir: artifacts/data_transformation/video
+  source_dir: artifacts/data_ingestion/data
+
+cache:
+  json_dir: ./.cache/responses
+  query_dir: ./.cache/query_cache.db
+  

@@ -1,0 +1,29 @@
+.chat-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.chat-actions button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.action-text {
+  color: var(--text-color);
+}
+
+.theme-icon {
+  filter: var(--icon-filter);
+  width: 20px;
+  height: 20px;
+}

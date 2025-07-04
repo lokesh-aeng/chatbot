@@ -1,0 +1,28 @@
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-icon {
+  width: 25px;
+  height: 25px;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+  transform: scale(1.1);
+}
+
+/* Theme-specific icon filters */
+body.light .theme-icon {
+  filter: invert(0%);
+}
+
+body.dark .theme-icon {
+  filter: invert(100%);
+}
