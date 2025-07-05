@@ -72,11 +72,23 @@ const App = () => {
     const payload = sessionId ? { session_id: sessionId, message: trimmed } : { message: trimmed };
 
     try {
-      const res = await fetch("/chat", {
+      // const res = await fetch("/chat", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(payload),
+      // });
+      const API_BASE = import.meta.env.VITE_API_URL;
+      const res = await fetch(`${API_BASE}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Chat API error:", res.status, text);
+        throw new Error(`API error ${res.status}`);
+      }
       const { session_id, response, cached, elapsed_time, suggestions = [] } = await res.json();
 
       if (session_id && session_id !== sessionId) {
