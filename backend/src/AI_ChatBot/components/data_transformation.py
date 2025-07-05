@@ -18,6 +18,7 @@ from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_openai.embeddings import OpenAIEmbeddings
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_huggingface.embeddings.huggingface_endpoint import HuggingFaceEndpointEmbeddings
 from langchain_community.document_loaders import UnstructuredPDFLoader,TextLoader,UnstructuredWordDocumentLoader
 
 
@@ -26,14 +27,20 @@ class DataTransformation:
       self.config = config
       self.params = params
       load_dotenv()
-      self.api_key = os.getenv("OPENAI_API_KEY")
+      self.api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+      self.api = os.getenv("OPENAI_API_KEY")
       if self.api_key:
+        logger.info("Using Huggingface embeddings")
+        self.embeddings = HuggingFaceEndpointEmbeddings(
+          model="sentence-transformers/all-MiniLM-L6-v2",
+          task="feature-extraction",          # required for embedding models
+          huggingfacehub_api_token=self.api_key
+      )
+      elif self.api:
         logger.info("Using OpenAI embeddings")
-        self.embeddings = OpenAIEmbeddings(api_key=self.api_key,model="text-embedding-3-small")
+        self.embeddings = OpenAIEmbeddings(api_key=self.api,model="text-embedding-3-small")
       else:
-        logger.info("Using HuggingFace embeddings")
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",model_kwargs={'device': device})
+         logger.error("No Embedding Model")
 
       self.max_workers = max_workers or os.cpu_count() or 4
       self.recursive_splitter = RecursiveCharacterTextSplitter(

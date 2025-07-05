@@ -4,10 +4,11 @@ import numpy as np
 import os
 import torch
 from AI_ChatBot.entity import QueryConfig
+from AI_ChatBot.logging import logger
 from supabase import create_client, Client
 from langchain.schema import Document
 from langchain_openai import OpenAIEmbeddings
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface.embeddings.huggingface_endpoint import HuggingFaceEndpointEmbeddings
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -21,15 +22,20 @@ class QueryProcessor:
     def __init__(self,params:QueryConfig):
         self.params = params
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        api = os.getenv("OPENAI_API_KEY")
-
-        if api:
-            self.embedding_model = OpenAIEmbeddings(api_key=api)
+        self.api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+        self.api = os.getenv("OPENAI_API_KEY")
+        if self.api_key:
+            logger.info("Using Huggingface embeddings")
+            self.embedding_model = HuggingFaceEndpointEmbeddings(
+            model="sentence-transformers/all-MiniLM-L6-v2",
+            task="feature-extraction",          # required for embedding models
+            huggingfacehub_api_token=self.api_key
+        )
+        elif self.api:
+            logger.info("Using OpenAI embeddings")
+            self.embedding_model = OpenAIEmbeddings(api_key=self.api,model="text-embedding-3-small")
         else:
-            self.embedding_model = HuggingFaceEmbeddings(
-                model_name="sentence-transformers/all-MiniLM-L6-v2",
-                model_kwargs={'device': device}
-            )
+            logger.error("No Embedding Model")
         self.supabase_url =  os.getenv("SUPABASE_URL") 
         self.supabase_key = os.getenv("SUPABASE_KEY")
 

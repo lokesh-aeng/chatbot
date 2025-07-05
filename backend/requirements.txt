@@ -16,7 +16,7 @@ docx2txt
 langchain_experimental
 pypdf
 chardet
-sentence-transformers
+huggingface_hub
 huggingface_hub[hf_xet]
 python-docx
 unstructured
@@ -24,7 +24,6 @@ unstructured[local-inference]
 pytesseract
 supabase
 langchain_google_genai
-torch
 langgraph
 
 -e .

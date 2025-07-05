@@ -8,7 +8,7 @@ from collections import defaultdict
 from supabase import create_client, Client
 from langchain.schema import Document
 from langchain_openai import OpenAIEmbeddings
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface.embeddings.huggingface_endpoint import HuggingFaceEndpointEmbeddings
 from AI_ChatBot.logging import logger
 
 class DataVectorization:
@@ -27,17 +27,20 @@ class DataVectorization:
         self.params = params
 
         device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
         self.api = os.getenv("OPENAI_API_KEY")
-
-        if self.api:
+        if self.api_key:
+            logger.info("Using Huggingface embeddings")
+            self.model = HuggingFaceEndpointEmbeddings(
+            model="sentence-transformers/all-MiniLM-L6-v2",
+            task="feature-extraction",          # required for embedding models
+            huggingfacehub_api_token=self.api_key
+        )
+        elif self.api:
             logger.info("Using OpenAI embeddings")
-            self.model = OpenAIEmbeddings(api_key=self.api)
+            self.model = OpenAIEmbeddings(api_key=self.api,model="text-embedding-3-small")
         else:
-            logger.info('Using HuggingFaceEmbeddings')
-            self.model = HuggingFaceEmbeddings(
-                model_name="sentence-transformers/all-MiniLM-L6-v2",
-                model_kwargs={'device': device}
-            )
+            logger.error("No Embedding Model")
 
         self.supabase: Client = create_client(self.supabase_url, self.supabase_key)
 
