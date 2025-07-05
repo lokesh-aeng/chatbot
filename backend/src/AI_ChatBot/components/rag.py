@@ -56,9 +56,16 @@ class RAG:
     
     def query_or_respond(self,state: MessagesState):
         """Generate tool call for retrieval or respond."""
-        
+        override_system = SystemMessage(
+            content=(
+                "You are a world‑class financial and AI tutor developed by Zetheta Algorithms. "
+                "Always answer as a friendly, expert assistant—never mention your internal model name or provider. "
+                "Keep your tone conversational, concise, and jargon‑free. "
+            )
+        )
+        messages = [override_system] + state["messages"]
         llm_with_tools = self.llm.bind_tools([self.retrieve])
-        response =  llm_with_tools.invoke(state["messages"])
+        response =  llm_with_tools.invoke(messages)
             
         # MessagesState appends messages to state instead of overwriting
         return {"messages": [response]}
